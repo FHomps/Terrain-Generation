@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using Boo.Lang.Runtime.DynamicDispatching;
+using System.Security.Cryptography;
 
 class BinaryReader_BigEndian : BinaryReader {
     public BinaryReader_BigEndian(System.IO.Stream stream) : base(stream) { }
@@ -84,11 +85,12 @@ public class HeightMapLoadEL : ElevationLayer {
         for (int i = 0; i < t.resolution; i++) {
             if (iCoords[i] < 0 || iCoords[i] >= lines)
                 continue;
+            br.BaseStream.Seek(startOffset + iCoords[i] * lineSamples * 4, SeekOrigin.Begin);
+            byte[] line = br.ReadBytes(lineSamples * 4);
             for (int j = 0; j < t.resolution; j++) {
                 if (jCoords[j] < 0 || jCoords[j] >= lineSamples)
                     continue;
-                br.BaseStream.Seek(startOffset + (iCoords[i] * lineSamples + jCoords[j]) * 4, SeekOrigin.Begin);
-                float f = br.ReadSingle();
+                float f = BitConverter.ToSingle(line, jCoords[j] * 4);
                 if (Mathf.Abs(f) < 10000) {
                     values[i, j] = f;
                     min = Mathf.Min(min, f);
