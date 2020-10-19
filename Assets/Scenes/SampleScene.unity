@@ -548,14 +548,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 1222946446}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c743abbbefa18414da8f5b82f8470269, type: 3}
+  m_Script: {fileID: 11500000, guid: cb2b53d15a96b0b489e21a6ceb36d134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   identifier: 
   active: 1
   shouldRegenerate: 1
-  minAltitude: 0
-  maxAltitude: 1
+  minSlope: 0
+  maxSlope: 1
 --- !u!1 &1634624213
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,8 +803,8 @@ MonoBehaviour:
   lineSamples: 6392
   startOffset: 25568
   maxHeight: 5
-  centerCoords: {x: 5000, y: 3000}
-  pixelSize: 0.05
+  centerCoords: {x: -3000, y: -5000}
+  pixelSize: 0.01
 --- !u!114 &1893557554
 MonoBehaviour:
   m_ObjectHideFlags: 0

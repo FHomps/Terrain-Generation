@@ -6,34 +6,6 @@ using System.IO;
 using Boo.Lang.Runtime.DynamicDispatching;
 using System.Security.Cryptography;
 
-class BinaryReader_BigEndian : BinaryReader {
-    public BinaryReader_BigEndian(System.IO.Stream stream) : base(stream) { }
-
-    public override int ReadInt32() {
-        var data = base.ReadBytes(4);
-        Array.Reverse(data);
-        return BitConverter.ToInt32(data, 0);
-    }
-
-    public override long ReadInt64() {
-        var data = base.ReadBytes(8);
-        Array.Reverse(data);
-        return BitConverter.ToInt64(data, 0);
-    }
-
-    public override float ReadSingle() {
-        var data = base.ReadBytes(4);
-        Array.Reverse(data);
-        return BitConverter.ToSingle(data, 0);
-    }
-
-    public override double ReadDouble() {
-        var data = base.ReadBytes(8);
-        Array.Reverse(data);
-        return BitConverter.ToDouble(data, 0);
-    }
-}
-
 public class HeightMapLoadEL : ElevationLayer {
 
     public string filename;
@@ -42,7 +14,7 @@ public class HeightMapLoadEL : ElevationLayer {
     public int startOffset = 25568;
     public float maxHeight = 5;
 
-    public Vector2Int centerCoords = Vector2Int.zero;
+    public Vector2 centerPosition = Vector2.zero;
     public float pixelSize = 1f;
 
     public override void Generate(bool reallocate) {
@@ -69,8 +41,8 @@ public class HeightMapLoadEL : ElevationLayer {
         int[] jCoords = new int[t.resolution];
 
         for (int i = 0; i < t.resolution; i++) {
-            iCoords[i] = Mathf.RoundToInt(centerCoords.x - (t.size / 2 - i * spacing) / pixelSize);
-            jCoords[i] = Mathf.RoundToInt(centerCoords.y - (t.size / 2 - i * spacing) / pixelSize);
+            iCoords[i] = Mathf.RoundToInt(lines / 2 - (centerPosition.y + t.size / 2 - i * spacing) / pixelSize);
+            jCoords[i] = Mathf.RoundToInt(lineSamples / 2 - (centerPosition.x + t.size / 2 - i * spacing) / pixelSize);
         }
 
         float min = float.MaxValue;
