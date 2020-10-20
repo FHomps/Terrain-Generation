@@ -12,7 +12,6 @@ public class HeightMapLoadEL : ElevationLayer {
     public int lines = 11613;
     public int lineSamples = 6392;
     public int startOffset = 25568;
-    public float maxHeight = 5;
 
     public Vector2 centerPosition = Vector2.zero;
     public float pixelSize = 1f;
@@ -74,7 +73,7 @@ public class HeightMapLoadEL : ElevationLayer {
         for (int i = 0; i < t.resolution; i++) {
             for (int j = 0; j < t.resolution; j++) {
                 if (values[i, j] != float.MinValue) {
-                    values[i, j] = (values[i, j] - min) / (max - min) * maxHeight;
+                    values[i, j] -= (min + max) / 2;
                 }
                 else {
                     values[i, j] = 0;
