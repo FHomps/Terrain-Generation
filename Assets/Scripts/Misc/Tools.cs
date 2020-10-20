@@ -75,4 +75,38 @@ public static class Tools {
         result.b = top.a * top.b + (1 - top.a) * bottom.a * bottom.b;
         return result;
     }
+
+    private static float startTime = 0;
+    private static float time = 0;
+    private static float subTime = 0;
+    private static string clockString = "";
+
+    public static void StartClock() {
+        clockString = "Started Clock\n";
+        time = Time.realtimeSinceStartup;
+        startTime = time;
+        subTime = time;
+    }
+
+    public static void AddClockStop(string message) {
+        float delta = Time.realtimeSinceStartup - time;
+        clockString += delta.ToString("F4") + " - " + message + '\n';
+
+        time = Time.realtimeSinceStartup;
+        subTime = time;
+    }
+
+    public static void AddSubClockStop(string message) {
+        float delta = Time.realtimeSinceStartup - subTime;
+        clockString += "    " + delta.ToString("F4") + " - " + message + '\n';
+
+        subTime = Time.realtimeSinceStartup;
+    }
+
+    public static void EndClock(string message = "End") {
+        AddClockStop(message);
+        float totalDelta = Time.realtimeSinceStartup - startTime;
+        clockString += totalDelta.ToString("F4") + " - " + "Total";
+        Debug.Log(clockString);
+    }
 }
