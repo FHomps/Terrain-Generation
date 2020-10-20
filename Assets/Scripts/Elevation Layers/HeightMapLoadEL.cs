@@ -35,13 +35,24 @@ public class HeightMapLoadEL : ElevationLayer {
 
         float spacing = t.size / (t.resolution - 1);
 
-        //Where i and j end up when translated to map coordinates
-        int[] iCoords = new int[t.resolution];
-        int[] jCoords = new int[t.resolution];
+        //Where i and j end up when translated to map coordinates, as floating coordinates (will be used in interpolation)
+        
+        int[] iCoords_floor = new int[t.resolution];
+        int[] iCoords_ceil = new int[t.resolution];
+        float[] iCoords_coeff = new float[t.resolution];
+        int[] jCoords_floor = new int[t.resolution];
+        int[] jCoords_ceil = new int[t.resolution];
+        float[] jCoords_coeff = new float[t.resolution];
 
         for (int i = 0; i < t.resolution; i++) {
-            iCoords[i] = Mathf.RoundToInt(lines / 2 - (centerPosition.y + t.size / 2 - i * spacing) / pixelSize);
-            jCoords[i] = Mathf.RoundToInt(lineSamples / 2 - (centerPosition.x + t.size / 2 - i * spacing) / pixelSize);
+            float iCoord = (float)lines / 2 - (centerPosition.y + t.size / 2 - i * spacing) / pixelSize;
+            float jCoord = (float)lineSamples / 2 - (centerPosition.x + t.size / 2 - i * spacing) / pixelSize;
+            iCoords_floor[i] = Mathf.FloorToInt(iCoord);
+            iCoords_ceil[i] = Mathf.CeilToInt(iCoord);
+            iCoords_coeff[i] = iCoord - iCoords_floor[i];
+            jCoords_floor[i] = Mathf.FloorToInt(jCoord);
+            jCoords_ceil[i] = Mathf.CeilToInt(jCoord);
+            jCoords_coeff[i] = jCoord - jCoords_floor[i];
         }
 
         float min = float.MaxValue;
@@ -54,14 +65,21 @@ public class HeightMapLoadEL : ElevationLayer {
         }
 
         for (int i = 0; i < t.resolution; i++) {
-            if (iCoords[i] < 0 || iCoords[i] >= lines)
+            if (iCoords_floor[i] < 0 || iCoords_ceil[i] >= lines)
                 continue;
-            br.BaseStream.Seek(startOffset + iCoords[i] * lineSamples * 4, SeekOrigin.Begin);
-            byte[] line = br.ReadBytes(lineSamples * 4);
+            br.BaseStream.Seek(startOffset + iCoords_floor[i] * lineSamples * 4, SeekOrigin.Begin);
+            byte[] upperLine = br.ReadBytes(lineSamples * 4);
+            byte[] lowerLine = br.ReadBytes(lineSamples * 4);
             for (int j = 0; j < t.resolution; j++) {
-                if (jCoords[j] < 0 || jCoords[j] >= lineSamples)
+                if (jCoords_floor[j] < 0 || jCoords_ceil[j] >= lineSamples)
                     continue;
-                float f = BitConverter.ToSingle(line, jCoords[j] * 4);
+                float topLeft = BitConverter.ToSingle(upperLine, jCoords_floor[j] * 4);
+                float topRight = BitConverter.ToSingle(upperLine, jCoords_ceil[j] * 4);
+                float botLeft = BitConverter.ToSingle(lowerLine, jCoords_floor[j] * 4);
+                float botRight = BitConverter.ToSingle(lowerLine, jCoords_ceil[j] * 4);
+                float x = iCoords_coeff[i];
+                float y = jCoords_coeff[j];
+                float f = botLeft * (1 - x) * (1 - y) + botRight * x * (1 - y) + topLeft * (1 - x) * y + topRight * x * y;
                 if (Mathf.Abs(f) < 10000) {
                     values[i, j] = f;
                     min = Mathf.Min(min, f);
