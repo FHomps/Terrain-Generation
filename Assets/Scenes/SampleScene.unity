@@ -210,6 +210,97 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &166494806
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 166494807}
+  - component: {fileID: 166494809}
+  - component: {fileID: 166494808}
+  m_Layer: 0
+  m_Name: Heterotropic
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &166494807
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166494806}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1634624214}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &166494808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166494806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8bb8f5c4eecf5764b9ee41a341ce362d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  identifier: 
+  active: 1
+  shouldRegenerate: 1
+  mask: {fileID: 0}
+  noise: {fileID: 166494809}
+  lowColor: {r: 0.199, g: 0.199, b: 0.199, a: 0.101960786}
+  highColor: {r: 0.553, g: 0.553, b: 0.553, a: 0.101960786}
+--- !u!114 &166494809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 166494806}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7826176e38e08409e4f3effeb8a2ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseName: Default Noise
+  seed: 1337
+  scale: 10
+  noiseType: 4
+  axisScales: {x: 10, y: 1, z: 1}
+  octaves: 3
+  lacunarity: 2
+  gain: 0.5
+  fractalType: 0
+  cellularDistanceFunction: 0
+  cellularReturnType: 1
+  cellularNoiseLookupType: 4
+  cellularNoiseLookupFrequency: 0.2
+  cellularDistanceIndex0: 0
+  cellularDistanceIndex1: 1
+  cellularJitter: 0.45
+  perturbType: 0
+  perturbAmp: 1
+  perturbFrequency: 0.5
+  perturbNormaliseLength: 1
+  perturbOctaves: 3
+  perturbLacunarity: 2
+  perturbGain: 0.5
+  generalSettingsFold: 1
+  fractalSettingsFold: 0
+  cellularSettingsFold: 0
+  perturbSettingsFold: 0
+  modified: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -415,6 +506,96 @@ MonoBehaviour:
   normalMoveSpeed: 10
   slowMoveFactor: 0.25
   fastMoveFactor: 3
+--- !u!1 &1042170895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1042170896}
+  - component: {fileID: 1042170898}
+  - component: {fileID: 1042170897}
+  m_Layer: 0
+  m_Name: Elevation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1042170896
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042170895}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1634624214}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1042170897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042170895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 591e9f9aae3a90d4cb668097fee1da59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  identifier: Surface El
+  active: 1
+  shouldRegenerate: 1
+  mask: {fileID: 0}
+  noise: {fileID: 1042170898}
+  strength: 3
+--- !u!114 &1042170898
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1042170895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7826176e38e08409e4f3effeb8a2ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseName: Surface El Noise
+  seed: 1337
+  scale: 75
+  noiseType: 5
+  axisScales: {x: 1, y: 1, z: 1}
+  octaves: 7
+  lacunarity: 2.1
+  gain: 0.5
+  fractalType: 0
+  cellularDistanceFunction: 0
+  cellularReturnType: 1
+  cellularNoiseLookupType: 4
+  cellularNoiseLookupFrequency: 0.2
+  cellularDistanceIndex0: 0
+  cellularDistanceIndex1: 1
+  cellularJitter: 0.45
+  perturbType: 0
+  perturbAmp: 1
+  perturbFrequency: 0.5
+  perturbNormaliseLength: 1
+  perturbOctaves: 3
+  perturbLacunarity: 2
+  perturbGain: 0.5
+  generalSettingsFold: 1
+  fractalSettingsFold: 1
+  cellularSettingsFold: 0
+  perturbSettingsFold: 0
+  modified: 1
 --- !u!1 &1065917120
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,7 +630,7 @@ MonoBehaviour:
   litShader: {fileID: 4800000, guid: 0bf81443d8862d24a8760056648e4a19, type: 3}
   resolution: 1024
   size: 1500
-  groundTruthMode: 1
+  groundTruthMode: 0
   WIPVertices: []
 --- !u!4 &1065917122
 Transform:
@@ -518,6 +699,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1222946447}
   - component: {fileID: 1222946448}
+  - component: {fileID: 1222946449}
+  - component: {fileID: 1222946451}
+  - component: {fileID: 1222946450}
   m_Layer: 0
   m_Name: Ground Truth
   m_TagString: Untagged
@@ -555,7 +739,56 @@ MonoBehaviour:
   active: 1
   shouldRegenerate: 1
   minSlope: 0
-  maxSlope: 1
+  maxSlope: 0.5
+--- !u!114 &1222946449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222946446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6a77e664150f254fab61ea28c7e7bda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  identifier: 
+  active: 1
+  shouldRegenerate: 1
+  slopeThreshold: 0.1
+--- !u!114 &1222946450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222946446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b48e1a354a5db094d8fc02f7b240df84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  identifier: 
+  active: 1
+  shouldRegenerate: 1
+  altitudeThreshold: 1
+--- !u!114 &1222946451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1222946446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c743abbbefa18414da8f5b82f8470269, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  identifier: 
+  active: 1
+  shouldRegenerate: 1
+  minAltitude: 0
+  maxAltitude: 1
 --- !u!1 &1634624213
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,16 +798,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1634624214}
-  - component: {fileID: 1634624216}
-  - component: {fileID: 1634624215}
-  - component: {fileID: 1634624217}
   m_Layer: 0
   m_Name: Surface
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1634624214
 Transform:
   m_ObjectHideFlags: 0
@@ -585,87 +815,13 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1042170896}
+  - {fileID: 1719832823}
+  - {fileID: 166494807}
   m_Father: {fileID: 1065917122}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1634624215
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1634624213}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 591e9f9aae3a90d4cb668097fee1da59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  identifier: Surface Noise
-  active: 1
-  shouldRegenerate: 1
-  mask: {fileID: 0}
-  noise: {fileID: 1634624216}
-  strength: 3
---- !u!114 &1634624216
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1634624213}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa7826176e38e08409e4f3effeb8a2ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  noiseName: Default Noise
-  seed: 1337
-  scale: 20
-  noiseType: 3
-  axisScales: {x: 1, y: 1, z: 1}
-  octaves: 9
-  lacunarity: 2
-  gain: 0.5
-  fractalType: 0
-  cellularDistanceFunction: 0
-  cellularReturnType: 1
-  cellularNoiseLookupType: 4
-  cellularNoiseLookupFrequency: 0.2
-  cellularDistanceIndex0: 0
-  cellularDistanceIndex1: 1
-  cellularJitter: 0.45
-  perturbType: 0
-  perturbAmp: 1
-  perturbFrequency: 0.5
-  perturbNormaliseLength: 1
-  perturbOctaves: 3
-  perturbLacunarity: 2
-  perturbGain: 0.5
-  generalSettingsFold: 1
-  fractalSettingsFold: 1
-  cellularSettingsFold: 0
-  perturbSettingsFold: 0
-  modified: 0
---- !u!114 &1634624217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1634624213}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bb8f5c4eecf5764b9ee41a341ce362d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  identifier: Surface Noise Color
-  active: 1
-  shouldRegenerate: 1
-  mask: {fileID: 0}
-  noise: {fileID: 1634624216}
-  lowColor: {r: 0, g: 0, b: 0, a: 1}
-  highColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1676490386
 GameObject:
   m_ObjectHideFlags: 0
@@ -676,14 +832,13 @@ GameObject:
   m_Component:
   - component: {fileID: 1676490387}
   - component: {fileID: 1676490388}
-  - component: {fileID: 1676490389}
   m_Layer: 0
   m_Name: Craters
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1676490387
 Transform:
   m_ObjectHideFlags: 0
@@ -710,46 +865,112 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc9ebbb7c677ca144946c02864ca7743, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  identifier: Big craters
+  identifier: 
   active: 1
   shouldRegenerate: 1
   mask: {fileID: 0}
   seed: 2
-  craters: 8
-  radius: {x: 4, y: 3}
-  holeDepth: {x: 0.6, y: 0.2}
-  holeSteepness: {x: 1.2, y: 0.7}
-  rimHeight: {x: 0.1, y: 0.1}
-  rimSteepness: {x: 0.15, y: 0.07}
-  smoothFactor: 0.238
-  noiseScale: 0.01
-  noiseStrength: 0.2
---- !u!114 &1676490389
+  craters: 5
+  variationRange: 1
+  radius: {x: 100, y: 0.5}
+  holeDepth: {x: 10, y: 0.5}
+  holeSteepness: {x: 1, y: 0.5}
+  rimHeight: {x: 4, y: 0}
+  rimSteepness: {x: 0.003, y: -0.3}
+  smoothFactor: {x: 3, y: -0.3}
+  noiseScale: 0.7
+  noiseStrength: 25
+--- !u!1 &1719832822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1719832823}
+  - component: {fileID: 1719832825}
+  - component: {fileID: 1719832824}
+  m_Layer: 0
+  m_Name: Base colors
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1719832823
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719832822}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1634624214}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1719832824
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1676490386}
+  m_GameObject: {fileID: 1719832822}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc9ebbb7c677ca144946c02864ca7743, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bb8f5c4eecf5764b9ee41a341ce362d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  identifier: Small craters
+  identifier: Surface CL
   active: 1
   shouldRegenerate: 1
   mask: {fileID: 0}
-  seed: 1
-  craters: 100
-  radius: {x: 0.8, y: 0.5}
-  holeDepth: {x: 0.2, y: 0.1}
-  holeSteepness: {x: 1.2, y: 0.7}
-  rimHeight: {x: 0.05, y: 0.05}
-  rimSteepness: {x: 0.15, y: 0.07}
-  smoothFactor: 0.22
-  noiseScale: 0.01
-  noiseStrength: 0.2
+  noise: {fileID: 1719832825}
+  lowColor: {r: 0.13, g: 0.13, b: 0.13, a: 1}
+  highColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
+--- !u!114 &1719832825
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1719832822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7826176e38e08409e4f3effeb8a2ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseName: Surface CL Noise
+  seed: 1337
+  scale: 600
+  noiseType: 5
+  axisScales: {x: 1, y: 1, z: 1}
+  octaves: 5
+  lacunarity: 2
+  gain: 0.5
+  fractalType: 0
+  cellularDistanceFunction: 0
+  cellularReturnType: 1
+  cellularNoiseLookupType: 4
+  cellularNoiseLookupFrequency: 0.2
+  cellularDistanceIndex0: 0
+  cellularDistanceIndex1: 1
+  cellularJitter: 0.45
+  perturbType: 0
+  perturbAmp: 1
+  perturbFrequency: 0.5
+  perturbNormaliseLength: 1
+  perturbOctaves: 3
+  perturbLacunarity: 2
+  perturbGain: 0.5
+  generalSettingsFold: 1
+  fractalSettingsFold: 1
+  cellularSettingsFold: 0
+  perturbSettingsFold: 0
+  modified: 0
 --- !u!1 &1893557551
 GameObject:
   m_ObjectHideFlags: 0
@@ -767,7 +988,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1893557552
 Transform:
   m_ObjectHideFlags: 0
@@ -802,7 +1023,7 @@ MonoBehaviour:
   lines: 11613
   lineSamples: 6392
   startOffset: 25568
-  centerPosition: {x: 0, y: 0}
+  centerPosition: {x: -1300, y: -3500}
   pixelSize: 1
 --- !u!114 &1893557554
 MonoBehaviour:

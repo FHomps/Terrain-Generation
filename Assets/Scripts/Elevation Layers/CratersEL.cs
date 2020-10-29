@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -7,13 +8,17 @@ public class CratersEL : ElevationLayer
     public int seed = 0;
     public uint craters = 10;
 
-    public Vector2 radius = new Vector2(5f, 5f);
-    public Vector2 holeDepth = new Vector2(5f, 5f);
-    public Vector2 holeSteepness = new Vector2(1f, 1f);
-    public Vector2 rimHeight = new Vector2(1f, 1f);
-    public Vector2 rimSteepness = new Vector2(1f, 1f);
     [Range(0, 1)]
-    public float smoothFactor = 0.5f;
+    public float variationRange = 0f;
+    //Crater attributes are 2-dimensional vectors:
+    //X: Main scale: base attribute value
+    //Y: Variation influence: attribute incremental multiplier at variation 1
+    public Vector2 radius = new Vector2(100f, 0f);
+    public Vector2 holeDepth = new Vector2(10f, 0f);
+    public Vector2 holeSteepness = new Vector2(1f, 0f);
+    public Vector2 rimHeight = new Vector2(4f, 0f);
+    public Vector2 rimSteepness = new Vector2(1f, 0f);
+    public Vector2 smoothFactor = new Vector2(.5f, 0f);
 
     public float noiseScale = 0.01f;
     public float noiseStrength = 0.2f;
@@ -28,7 +33,7 @@ public class CratersEL : ElevationLayer
                     values[i, j] = 0;
                 }
             }
-        }
+        }        
 
         Random.InitState(seed);
 
@@ -37,11 +42,14 @@ public class CratersEL : ElevationLayer
         float[] noiseSet = noise.GetNoiseSet(0, 0, 0, t.resolution, 1, t.resolution, t.size / t.resolution / noiseScale);
 
         for (int i = 0; i < craters; i++) {
-            float r = Tools.RandRange(radius);
-            float hd = Tools.RandRange(holeDepth);
-            float hs = Tools.RandRange(holeSteepness);
-            float rh = Tools.RandRange(rimHeight);
-            float rs = Tools.RandRange(rimSteepness);
+            float variation = Random.Range(-variationRange, variationRange);
+
+            float r = Tools.Variate(radius, variation);
+            float hd = Tools.Variate(holeDepth, variation);
+            float hs = Tools.Variate(holeSteepness, variation);
+            float rh = Tools.Variate(rimHeight, variation);
+            float rs = Tools.Variate(rimSteepness, variation);
+            float sf = Tools.Variate(smoothFactor, variation);
 
             Vector2 craterPos = new Vector2(Random.value, Random.value) * t.size;
             float fullRadius = r + Mathf.Sqrt(rh / rs);
@@ -58,8 +66,8 @@ public class CratersEL : ElevationLayer
                     float rimX = Mathf.Min(dist - fullRadius, 0);
                     float rim = rs * Tools.Square(rimX);
 
-                    float craterShape = Tools.SmoothMax(hole, -hd, smoothFactor);
-                    craterShape = Tools.SmoothMin(craterShape, rim, smoothFactor);
+                    float craterShape = Tools.SmoothMax(hole, -hd, sf);
+                    craterShape = Tools.SmoothMin(craterShape, rim, sf);
                     values[x, y] += craterShape;
                 }
             }

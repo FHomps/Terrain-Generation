@@ -98,7 +98,8 @@ public class ProceduralTerrain : MonoBehaviour
         foreach (TerrainLayer layer in gameObject.GetComponentsInChildren<TerrainLayer>()) {
             if (layer is GroundTruthLayer && shouldUpdateVertices) { // All ground truth layers to load after a regenerating EL should also be regenerated
                 layer.shouldRegenerate = true;
-                shouldUpdateGroundTruth = true;
+                if (groundTruthMode)
+                    shouldUpdateGroundTruth = true;
             }
             else if (layer.shouldRegenerate) {
                 if (layer is ElevationLayer)

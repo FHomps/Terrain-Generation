@@ -14,7 +14,12 @@ public class HeightMapLoadEL : ElevationLayer {
     public int startOffset = 25568;
 
     public Vector2 centerPosition = Vector2.zero;
+    private float old_pixelSize;
     public float pixelSize = 1f;
+
+    private void Start() {
+        old_pixelSize = pixelSize;
+    }
 
     public override void Generate(bool reallocate) {
         ProceduralTerrain t = gameObject.GetComponentInParent<ProceduralTerrain>();
@@ -81,7 +86,7 @@ public class HeightMapLoadEL : ElevationLayer {
                 float y = jCoords_coeff[j];
                 float f = botLeft * (1 - x) * (1 - y) + botRight * x * (1 - y) + topLeft * (1 - x) * y + topRight * x * y;
                 if (Mathf.Abs(f) < 10000) {
-                    values[i, j] = f;
+                    values[t.resolution - i - 1, j] = f;
                     min = Mathf.Min(min, f);
                     max = Mathf.Max(max, f);
                 }
@@ -100,5 +105,17 @@ public class HeightMapLoadEL : ElevationLayer {
         }
 
         br.Close();
+    }
+
+    protected override void OnValidate() {
+        base.OnValidate();
+
+        if (old_pixelSize == 0)
+            old_pixelSize = pixelSize;
+        if (old_pixelSize != pixelSize && pixelSize != 0) {
+            Debug.Log(pixelSize.ToString() + ' ' + old_pixelSize.ToString() + ' ' + centerPosition.ToString());
+            centerPosition = centerPosition * pixelSize / old_pixelSize;
+            old_pixelSize = pixelSize;
+        }
     }
 }

@@ -49,8 +49,8 @@ public static class Tools {
         return a * h + b * (1 - h) - k * h * (1 - h);
     }
 
-    public static float RandRange(Vector2 rangedFloat) {
-        return UnityEngine.Random.Range(rangedFloat.x - rangedFloat.y / 2, rangedFloat.x + rangedFloat.y / 2);
+    public static float Variate(Vector2 variableFloat, float variation) {
+        return variableFloat.x * (1 + variation * variableFloat.y);
     }
 
     public static float Gauss2D(float x, float y, float sigmaSquared) {
