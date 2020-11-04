@@ -35,7 +35,7 @@ public class LowPassEL : ElevationLayer {
     }
 
     public override void Generate(bool reallocate) {
-        ProceduralTerrain t = gameObject.GetComponentInParent<ProceduralTerrain>();
+        BaseTerrain t = gameObject.GetComponentInParent<BaseTerrain>();
         if (reallocate || values == null)
             values = new float[t.resolution, t.resolution];
         else {

@@ -4,7 +4,7 @@ using System.IO.MemoryMappedFiles;
 using UnityEngine;
 
 [DisallowMultipleComponent]
-public class ProceduralTerrain : MonoBehaviour
+public class BaseTerrain : MonoBehaviour
 {
     public Shader unlitShader;
     public Shader litShader;

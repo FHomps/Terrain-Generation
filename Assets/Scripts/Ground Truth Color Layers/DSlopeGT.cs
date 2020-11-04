@@ -7,7 +7,7 @@ public class DSlopeGT : GroundTruthLayer {
     public float slopeThreshold = 0.5f;
 
     public override void Generate(bool reallocate) {
-        ProceduralTerrain t = gameObject.GetComponentInParent<ProceduralTerrain>();
+        BaseTerrain t = gameObject.GetComponentInParent<BaseTerrain>();
         if (reallocate || values == null)
             values = new Color[t.resolution, t.resolution];
 

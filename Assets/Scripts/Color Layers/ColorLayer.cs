@@ -10,7 +10,7 @@ public class ColorLayer : TerrainLayer {
     public virtual bool IsGroundTruth() { return false; }
 
     public override void Generate(bool reallocate) {
-        ProceduralTerrain t = gameObject.GetComponentInParent<ProceduralTerrain>();
+        BaseTerrain t = gameObject.GetComponentInParent<BaseTerrain>();
         if (reallocate || values == null)
             values = new Color[t.resolution, t.resolution];
     }

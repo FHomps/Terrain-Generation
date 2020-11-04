@@ -31,7 +31,7 @@ public class FastNoiseSIMDUnityEditor : Editor
 			changed |= Refresh(ref fastNoiseSIMDUnity.scale, EditorGUILayout.FloatField("Global Scale", fastNoiseSIMDUnity.scale));
 			fastNoiseSIMD.SetNoiseType(fastNoiseSIMDUnity.noiseType);
 			fastNoiseSIMD.SetSeed(fastNoiseSIMDUnity.seed);
-			ProceduralTerrain t = fastNoiseSIMDUnity.GetComponentInParent<ProceduralTerrain>();
+			BaseTerrain t = fastNoiseSIMDUnity.GetComponentInParent<BaseTerrain>();
 			fastNoiseSIMD.SetFrequency(1.0f / fastNoiseSIMDUnity.scale);
 
 			Vector3 axisScales = EditorGUILayout.Vector3Field("Axis Scales", fastNoiseSIMDUnity.axisScales);

@@ -8,7 +8,7 @@ public class GroundTruthLayer : TerrainLayer
     public Color[,] values;
 
     public override void Generate(bool reallocate = false) {
-        ProceduralTerrain t = gameObject.GetComponentInParent<ProceduralTerrain>();
+        BaseTerrain t = gameObject.GetComponentInParent<BaseTerrain>();
         if (reallocate || values == null)
             values = new Color[t.resolution, t.resolution];
     }

@@ -24,7 +24,7 @@ public class CratersEL : ElevationLayer
     public float noiseStrength = 0.2f;
 
     public override void Generate(bool reallocate) {
-        ProceduralTerrain t = gameObject.GetComponentInParent<ProceduralTerrain>();
+        BaseTerrain t = gameObject.GetComponentInParent<BaseTerrain>();
         if (reallocate || values == null)
             values = new float[t.resolution, t.resolution];
         else {
