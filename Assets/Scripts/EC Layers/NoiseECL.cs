@@ -2,12 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NoiseCL : ColorLayer {
-
+public class NoiseECL : ECLayer {
     public FastNoiseSIMDUnity noise = null;
 
     public Color lowColor = Color.black;
     public Color highColor = Color.white;
+
+    public float elevationStrength = 1.0f;
 
     public override bool PropagateDependencies() {
         if (!shouldRegenerate && noise != null && noise.modified) {
@@ -29,7 +30,8 @@ public class NoiseCL : ColorLayer {
 
         for (int i = 0; i < t.resolution; i++) {
             for (int j = 0; j < t.resolution; j++) {
-                values[i, j] = Color.Lerp(lowColor, highColor, set[i + j * t.resolution] + 0.5f);
+                colorValues[i, j] = Color.Lerp(lowColor, highColor, set[i + j * t.resolution] + 0.5f);
+                elevationValues[i, j] = elevationStrength * set[i + j * t.resolution];
             }
         }
     }

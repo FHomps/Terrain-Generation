@@ -18,9 +18,8 @@ public class NoiseEL : ElevationLayer {
     }
 
     public override void Generate(bool reallocate) {
+        base.Generate(reallocate);
         BaseTerrain t = gameObject.GetComponentInParent<BaseTerrain>();
-        if (reallocate || values == null)
-            values = new float[t.resolution, t.resolution];
 
         if (noise == null) {
             return;

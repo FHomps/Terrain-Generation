@@ -102,9 +102,9 @@ public class BaseTerrain : MonoBehaviour
                     shouldUpdateGroundTruth = true;
             }
             else if (layer.shouldRegenerate) {
-                if (layer is ElevationLayer)
+                if (layer is ElevationLayer || layer is ECLayer)
                     shouldUpdateVertices = true;
-                else if (layer is ColorLayer)
+                else if (layer is ColorLayer || layer is ECLayer)
                     shouldUpdateColors = true;
                 else if (layer is GroundTruthLayer)
                     shouldUpdateGroundTruth = true;
@@ -159,6 +159,24 @@ public class BaseTerrain : MonoBehaviour
                             for (int i = 0; i < resolution; i++) {
                                 for (int j = 0; j < resolution; j++) {
                                     colors[i * resolution + j] = Tools.OverlayColors(colors[i * resolution + j], cLayer.values[i, j]);
+                                }
+                            }
+                        }
+                    }
+                    else if (groundTruthMode == false && layer is ECLayer ecLayer) {
+                        if (ecLayer.mask != null) {
+                            for (int i = 0; i < resolution; i++) {
+                                for (int j = 0; j < resolution; j++) {
+                                    WIPVertices[i * resolution + j].y += ecLayer.mask.values[i, j] * ecLayer.elevationValues[i, j];
+                                    colors[i * resolution + j] = Tools.OverlayColors(colors[i * resolution + j], ecLayer.colorValues[i, j], ecLayer.mask.values[i, j]);
+                                }
+                            }
+                        }
+                        else {
+                            for (int i = 0; i < resolution; i++) {
+                                for (int j = 0; j < resolution; j++) {
+                                    WIPVertices[i * resolution + j].y += ecLayer.elevationValues[i, j];
+                                    colors[i * resolution + j] = Tools.OverlayColors(colors[i * resolution + j], ecLayer.colorValues[i, j]);
                                 }
                             }
                         }
@@ -220,6 +238,40 @@ public class BaseTerrain : MonoBehaviour
                             for (int i = 0; i < resolution; i++) {
                                 for (int j = 0; j < resolution; j++) {
                                     colors[i * resolution + j] = Tools.OverlayColors(colors[i * resolution + j], cLayer.values[i, j]);
+                                }
+                            }
+                        }
+                    }
+                    else if (layer is ECLayer ecLayer) {
+                        if (shouldUpdateVertices || shouldUpdateGroundTruth) {
+                            if (ecLayer.mask != null) {
+                                for (int i = 0; i < resolution; i++) {
+                                    for (int j = 0; j < resolution; j++) {
+                                        WIPVertices[i * resolution + j].y += ecLayer.mask.values[i, j] * ecLayer.elevationValues[i, j];
+                                    }
+                                }
+                            }
+                            else {
+                                for (int i = 0; i < resolution; i++) {
+                                    for (int j = 0; j < resolution; j++) {
+                                        WIPVertices[i * resolution + j].y += ecLayer.elevationValues[i, j];
+                                    }
+                                }
+                            }
+                        }
+                        if (groundTruthMode == false && shouldUpdateColors) {
+                            if (ecLayer.mask != null) {
+                                for (int i = 0; i < resolution; i++) {
+                                    for (int j = 0; j < resolution; j++) {
+                                        colors[i * resolution + j] = Tools.OverlayColors(colors[i * resolution + j], ecLayer.colorValues[i, j], ecLayer.mask.values[i, j]);
+                                    }
+                                }
+                            }
+                            else {
+                                for (int i = 0; i < resolution; i++) {
+                                    for (int j = 0; j < resolution; j++) {
+                                        colors[i * resolution + j] = Tools.OverlayColors(colors[i * resolution + j], ecLayer.colorValues[i, j]);
+                                    }
                                 }
                             }
                         }
