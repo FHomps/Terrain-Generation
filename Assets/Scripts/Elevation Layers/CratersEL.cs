@@ -1,10 +1,8 @@
 ﻿using System;
-using UnityEditor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class CratersEL : ElevationLayer
-{
+public class CratersEL : ElevationLayer {
     public int seed = 0;
     public uint craters = 10;
 
@@ -24,10 +22,9 @@ public class CratersEL : ElevationLayer
     public float noiseStrength = 0.2f;
 
     public override void Generate(bool reallocate) {
+        base.Generate(reallocate);
         BaseTerrain t = gameObject.GetComponentInParent<BaseTerrain>();
-        if (reallocate || values == null)
-            values = new float[t.resolution, t.resolution];
-        else {
+        if (!reallocate) {
             for (int i = 0; i < t.resolution; i++) {
                 for (int j = 0; j < t.resolution; j++) {
                     values[i, j] = 0;

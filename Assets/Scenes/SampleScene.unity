@@ -277,7 +277,7 @@ MonoBehaviour:
   seed: 1337
   scale: 10
   noiseType: 4
-  axisScales: {x: 10, y: 1, z: 1}
+  axisScales: {x: 7, y: 1, z: 1}
   octaves: 3
   lacunarity: 2
   gain: 0.5
@@ -831,6 +831,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1676490387}
+  - component: {fileID: 1676490389}
   - component: {fileID: 1676490388}
   m_Layer: 0
   m_Name: Craters
@@ -862,24 +863,70 @@ MonoBehaviour:
   m_GameObject: {fileID: 1676490386}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc9ebbb7c677ca144946c02864ca7743, type: 3}
+  m_Script: {fileID: 11500000, guid: aeee5553629961b48a393c32fa6a7a4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   identifier: 
   active: 1
   shouldRegenerate: 1
   mask: {fileID: 0}
-  seed: 2
-  craters: 5
-  variationRange: 1
-  radius: {x: 100, y: 0.5}
+  seed: 0
+  craters: 10
+  variationRange: 0.6
+  radius: {x: 80, y: 0.8}
   holeDepth: {x: 10, y: 0.5}
   holeSteepness: {x: 1, y: 0.5}
   rimHeight: {x: 4, y: 0}
   rimSteepness: {x: 0.003, y: -0.3}
   smoothFactor: {x: 3, y: -0.3}
-  noiseScale: 0.7
-  noiseStrength: 25
+  shapeNoiseScale: 0.7
+  shapeNoiseStrength: 20
+  colorNoise: {fileID: 1676490389}
+  colorValue: {x: 0.8, y: 0}
+  colorAlpha: {x: 0.8, y: 0.3}
+  colorSpread: {x: 80, y: 0.3}
+  colorDecay: {x: 2, y: -0.4}
+  colorNoiseStrength: {x: 0.6, y: 0.2}
+--- !u!114 &1676490389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1676490386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa7826176e38e08409e4f3effeb8a2ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  noiseName: Default Noise
+  seed: 1337
+  scale: 100
+  noiseType: 5
+  axisScales: {x: 1, y: 1, z: 1}
+  octaves: 5
+  lacunarity: 2
+  gain: 0.5
+  fractalType: 0
+  cellularDistanceFunction: 0
+  cellularReturnType: 1
+  cellularNoiseLookupType: 4
+  cellularNoiseLookupFrequency: 0.2
+  cellularDistanceIndex0: 0
+  cellularDistanceIndex1: 1
+  cellularJitter: 0.45
+  perturbType: 0
+  perturbAmp: 1
+  perturbFrequency: 0.5
+  perturbNormaliseLength: 1
+  perturbOctaves: 3
+  perturbLacunarity: 2
+  perturbGain: 0.5
+  generalSettingsFold: 1
+  fractalSettingsFold: 1
+  cellularSettingsFold: 0
+  perturbSettingsFold: 0
+  modified: 0
 --- !u!1 &1719832822
 GameObject:
   m_ObjectHideFlags: 0

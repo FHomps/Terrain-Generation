@@ -104,9 +104,9 @@ public class BaseTerrain : MonoBehaviour
             else if (layer.shouldRegenerate) {
                 if (layer is ElevationLayer || layer is ECLayer)
                     shouldUpdateVertices = true;
-                else if (layer is ColorLayer || layer is ECLayer)
+                if (layer is ColorLayer || layer is ECLayer)
                     shouldUpdateColors = true;
-                else if (layer is GroundTruthLayer)
+                if (layer is GroundTruthLayer)
                     shouldUpdateGroundTruth = true;
             }
         }
