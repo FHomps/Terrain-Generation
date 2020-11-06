@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
-using Unity;
 using Random = UnityEngine.Random;
 
 public class CratersECL : ECLayer {
     public int seed = 0;
     public uint craters = 10;
+    public bool poissonSampling = true;
 
     [Range(0, 1)]
     public float variationRange = 0f;
@@ -51,13 +52,25 @@ public class CratersECL : ECLayer {
 
         Random.InitState(seed);
 
+        List<Vector2> craterPositions;
+        if (poissonSampling) {
+            craterPositions = FastPoissonDiskSampling.Sampling(Vector2.zero, Vector2.one * t.size, t.size / Mathf.Sqrt(craters));
+
+        }
+        else {
+            craterPositions = new List<Vector2>((int)craters);
+            for (int i = 0; i < craters; i++) {
+                craterPositions.Add(new Vector2(Random.value, Random.value) * t.size);
+            }
+        }
+
         FastNoiseSIMD shapeNoise = new FastNoiseSIMD(seed);
         shapeNoise.SetNoiseType(FastNoiseSIMD.NoiseType.Perlin);
         float[] shapeNoiseSet = shapeNoise.GetNoiseSet(0, 0, 0, t.resolution, 1, t.resolution, t.size / t.resolution / shapeNoiseScale);
 
         float[] colorNoiseSet = colorNoise.fastNoiseSIMD.GetNoiseSet(0, 0, 0, t.resolution, 1, t.resolution, t.size / t.resolution);
 
-        for (int i = 0; i < craters; i++) {
+        foreach (Vector2 craterPos in craterPositions) {
             float variation = Random.Range(-variationRange, variationRange);
 
             float r = Tools.Variate(radius, variation);
@@ -73,7 +86,6 @@ public class CratersECL : ECLayer {
             float dc = Tools.Variate(colorDecay, variation);
             float cnstr = Tools.Variate(colorNoiseStrength, variation);
 
-            Vector2 craterPos = new Vector2(Random.value, Random.value) * t.size;
             float fullRadius = r + Mathf.Sqrt(rh / rs);
             int minx = Math.Max(0, Mathf.FloorToInt((craterPos.x - 1.5f * fullRadius) / t.size * t.resolution));
             int miny = Math.Max(0, Mathf.FloorToInt((craterPos.y - 1.5f * fullRadius) / t.size * t.resolution));
