@@ -8,6 +8,11 @@ public class MouseIndicator : MonoBehaviour {
     GameObject mainSphere = null;
     GameObject diffSphere = null;
 
+    Vector2Int mainPos;
+    public Vector2Int MainPos { get => mainPos; }
+    Vector2Int diffPos;
+    public Vector2Int DiffPos { get => diffPos; }
+
     private void Start() {
         mainSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         diffSphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -17,6 +22,8 @@ public class MouseIndicator : MonoBehaviour {
         diffSphere.transform.position = new Vector3(20, 200, 20);
         diffSphere.transform.localScale = Vector3.one * 20;
         diffSphere.GetComponent<MeshRenderer>().material.color = Color.blue;
+        mainSphere.SetActive(false);
+        diffSphere.SetActive(false);
     }
 
     void Update() {
@@ -49,19 +56,28 @@ public class MouseIndicator : MonoBehaviour {
                 }
                 return;
             }
+
             float height = t.WIPVertices[i * t.resolution + j].y;
             worldPos.y = height;
 
-            if (left)
+            if (left) {
+                mainPos = new Vector2Int(i, j);
                 mainSphere.transform.position = worldPos;
-            else
+            }
+            else {
+                diffPos = new Vector2Int(i, j);
                 diffSphere.transform.position = worldPos;
+            }
 
-            string y1 = mainSphere.activeSelf ? mainSphere.transform.position.y.ToString("F1") : "?";
-            string y2 = diffSphere.activeSelf ? diffSphere.transform.position.y.ToString("F1") : "?";
-            string delta = (mainSphere.activeSelf && diffSphere.activeSelf) ? (mainSphere.transform.position.y - diffSphere.transform.position.y).ToString("F1") : "?";
+            Vector3 mspos = mainSphere.transform.position;
+            Vector3 dspos = diffSphere.transform.position;
 
-            Debug.Log(y1 + '\t' + y2 + "\tΔ " + delta);
+            string y1 = mainSphere.activeSelf ? mspos.y.ToString("F1") : "?";
+            string y2 = diffSphere.activeSelf ? dspos.y.ToString("F1") : "?";
+            string dy = (mainSphere.activeSelf && diffSphere.activeSelf) ? (mspos.y - dspos.y).ToString("F1") : "?";
+            string dD = (mainSphere.activeSelf && diffSphere.activeSelf) ? (new Vector2(mspos.x - dspos.x, mspos.z - dspos.z).magnitude).ToString("F1") : "?";
+
+            Debug.Log("H1 " + y1 + "\tH2 " + y2 + "\tΔH " + dy + "\tΔD " + dD);
         }
     }
 }

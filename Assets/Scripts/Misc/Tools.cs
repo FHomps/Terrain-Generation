@@ -60,19 +60,19 @@ public static class Tools {
     public static Color OverlayColors(Color bottom, Color top) {
         Color result = new Color();
         result.a = top.a + (1 - top.a) * bottom.a;
-        result.r = top.a * top.r + (1 - top.a) * bottom.a * bottom.r;
-        result.g = top.a * top.g + (1 - top.a) * bottom.a * bottom.g;
-        result.b = top.a * top.b + (1 - top.a) * bottom.a * bottom.b;
+        result.r = top.a * top.r + (1 - top.a) * bottom.r;
+        result.g = top.a * top.g + (1 - top.a) * bottom.g;
+        result.b = top.a * top.b + (1 - top.a) * bottom.b;
         return result;
     }
 
     public static Color OverlayColors(Color bottom, Color top, float topMask) {
         Color result = new Color();
-        top.a = top.a * topMask;
-        result.a = top.a + (1 - top.a) * bottom.a;
-        result.r = top.a * top.r + (1 - top.a) * bottom.a * bottom.r;
-        result.g = top.a * top.g + (1 - top.a) * bottom.a * bottom.g;
-        result.b = top.a * top.b + (1 - top.a) * bottom.a * bottom.b;
+        float maskedTopA = top.a * topMask;
+        result.a = maskedTopA + (1 - maskedTopA) * bottom.a;
+        result.r = maskedTopA * top.r + (1 - maskedTopA) * bottom.r;
+        result.g = maskedTopA * top.g + (1 - maskedTopA) * bottom.g;
+        result.b = maskedTopA * top.b + (1 - maskedTopA) * bottom.b;
         return result;
     }
 

@@ -190,9 +190,6 @@ public class BaseTerrain : MonoBehaviour
                     }
                 }
 
-                WIPVertices[0].y = 150;
-                WIPVertices[resolution - 1].y = 300;
-
                 mesh.vertices = WIPVertices;
                 mesh.triangles = InitializeTriangles();
                 mesh.RecalculateNormals();

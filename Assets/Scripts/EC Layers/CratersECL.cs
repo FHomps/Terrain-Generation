@@ -8,8 +8,8 @@ public class CratersECL : ECLayer {
     public uint craters = 10;
     public bool poissonSampling = true;
 
-    [Range(0, 1)]
-    public float variationRange = 0f;
+    public bool enableVariation = true;
+    public float variationShapeFactor = 0f;
     //Crater attributes are 2-dimensional vectors:
     //X: Main scale: base attribute value
     //Y: Variation influence: attribute incremental multiplier at variation 1
@@ -23,15 +23,20 @@ public class CratersECL : ECLayer {
     public float shapeNoiseScale = 0.01f;
     public float shapeNoiseStrength = 0.2f;
 
-    public FastNoiseSIMDUnity colorNoise;
-    public Vector2 colorValue = new Vector2(.8f, 0f);
-    public Vector2 colorAlpha = new Vector2(.8f, .3f);
-    public Vector2 colorSpread = new Vector2(120f, 0f);
-    public Vector2 colorDecay = new Vector2(2f, 0f);
-    public Vector2 colorNoiseStrength = new Vector2(.5f, 0f);
+    public FastNoiseSIMDUnity ridgeColorNoise;
+    public Vector2 ridgeColorValue = new Vector2(.8f, 0f);
+    public Vector2 ridgeColorAlpha = new Vector2(.8f, .3f);
+    public Vector2 ridgeColorSpread = new Vector2(120f, 0f);
+    public Vector2 ridgeColorDecay = new Vector2(2f, 0f);
+    public Vector2 ridgeColorNoiseStrength = new Vector2(.5f, 0f);
+
+    public FastNoiseSIMDUnity holeColorNoise;
+    public Vector2 holeColorValue = new Vector2(.8f, 0f);
+    public Vector2 holeColorAlpha = new Vector2(.8f, .3f);
+    public Vector2 holeColorNoiseStrength = new Vector2(.5f, 0f);
 
     public override bool PropagateDependencies() {
-        if (!shouldRegenerate && colorNoise != null && colorNoise.modified) {
+        if (!shouldRegenerate && ridgeColorNoise != null && ridgeColorNoise.modified) {
             shouldRegenerate = true;
             return true;
         }
@@ -68,10 +73,13 @@ public class CratersECL : ECLayer {
         shapeNoise.SetNoiseType(FastNoiseSIMD.NoiseType.Perlin);
         float[] shapeNoiseSet = shapeNoise.GetNoiseSet(0, 0, 0, t.resolution, 1, t.resolution, t.size / t.resolution / shapeNoiseScale);
 
-        float[] colorNoiseSet = colorNoise.fastNoiseSIMD.GetNoiseSet(0, 0, 0, t.resolution, 1, t.resolution, t.size / t.resolution);
+        float[] colorNoiseSet = ridgeColorNoise.fastNoiseSIMD.GetNoiseSet(0, 0, 0, t.resolution, 1, t.resolution, t.size / t.resolution);
 
         foreach (Vector2 craterPos in craterPositions) {
-            float variation = Random.Range(-variationRange, variationRange);
+            float variation = 0; 
+            if (enableVariation) {
+                variation = Mathf.Pow(Random.Range(0f, 1f), Mathf.Exp(-variationShapeFactor / 5)) * 2 - 1;
+            }
 
             float r = Tools.Variate(radius, variation);
             float hd = Tools.Variate(holeDepth, variation);
@@ -80,24 +88,27 @@ public class CratersECL : ECLayer {
             float rs = Tools.Variate(rimSteepness, variation);
             float sf = Tools.Variate(smoothFactor, variation);
 
-            float v = Tools.Variate(colorValue, variation);
-            float a = Tools.Variate(colorAlpha, variation);
-            float spr = Tools.Variate(colorSpread, variation);
-            float dc = Tools.Variate(colorDecay, variation);
-            float cnstr = Tools.Variate(colorNoiseStrength, variation);
+            float v = Tools.Variate(ridgeColorValue, variation);
+            float a = Tools.Variate(ridgeColorAlpha, variation);
+            float spr = Tools.Variate(ridgeColorSpread, variation);
+            float dc = Tools.Variate(ridgeColorDecay, variation);
+            float cnstr = Tools.Variate(ridgeColorNoiseStrength, variation);
 
-            float fullRadius = r + Mathf.Sqrt(rh / rs);
-            int minx = Math.Max(0, Mathf.FloorToInt((craterPos.x - 1.5f * fullRadius) / t.size * t.resolution));
-            int miny = Math.Max(0, Mathf.FloorToInt((craterPos.y - 1.5f * fullRadius) / t.size * t.resolution));
-            int maxx = Math.Min(t.resolution, Mathf.CeilToInt((craterPos.x + 1.5f * fullRadius) / t.size * t.resolution));
-            int maxy = Math.Min(t.resolution, Mathf.CeilToInt((craterPos.y + 1.5f * fullRadius) / t.size * t.resolution));
+            float elevationRadius = r + Mathf.Sqrt(rh / rs);
+            float colorRadius = r + spr;
+            float affectedRadius = Mathf.Max(elevationRadius, colorRadius);
+            int minx = Math.Max(0, Mathf.FloorToInt((craterPos.x - affectedRadius) / t.size * t.resolution));
+            int miny = Math.Max(0, Mathf.FloorToInt((craterPos.y - affectedRadius) / t.size * t.resolution));
+            int maxx = Math.Min(t.resolution, Mathf.CeilToInt((craterPos.x + affectedRadius) / t.size * t.resolution));
+            int maxy = Math.Min(t.resolution, Mathf.CeilToInt((craterPos.y + affectedRadius) / t.size * t.resolution));
+
             for (int x = minx; x < maxx; x++) {
                 for (int y = miny; y < maxy; y++) {
                     float dist = (new Vector2(x, y) / t.resolution * t.size - craterPos).magnitude + shapeNoiseSet[x + t.resolution * y] * shapeNoiseStrength;
 
                     // Adapted from S. Lague - https://github.com/SebLague/Solar-System
                     float hole = (Tools.Square(dist / r) - 1) * (hd + rh) * hs + rh;
-                    float rimX = Mathf.Min(dist - fullRadius, 0);
+                    float rimX = Mathf.Min(dist - elevationRadius, 0);
                     float rim = rs * Tools.Square(rimX);
 
                     float craterShape = Tools.SmoothMax(hole, -hd, sf);
@@ -106,10 +117,11 @@ public class CratersECL : ECLayer {
 
                     float distToRidge = Mathf.Abs(dist - r);
                     Color pixelColor = new Color(v, v, v, a);
-                    pixelColor.a *= 1 - (colorNoiseSet[x + t.resolution * y] + 0.5f) * cnstr;
-                    pixelColor = Color.Lerp(Color.clear, pixelColor, Mathf.Pow(Mathf.Max(0, 1 - distToRidge / spr), dc));
-                    
+                    pixelColor.a += colorNoiseSet[x + t.resolution * y] * cnstr;
+                    pixelColor.a *= Mathf.Pow(Mathf.Max(0, 1 - distToRidge / spr), dc);
+
                     colorValues[x, y] = Tools.OverlayColors(colorValues[x, y], pixelColor);
+
                 }
             }
         }
