@@ -345,7 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noiseName: Ridge Color Noise
-  seed: 1337
+  seed: 1
   scale: 100
   noiseType: 5
   axisScales: {x: 1, y: 1, z: 1}
@@ -388,7 +388,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &314434578
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -621,9 +621,10 @@ MonoBehaviour:
   ridgeColorDecay: {x: 3, y: -0.2}
   ridgeColorNoiseStrength: {x: 0.8, y: 0}
   holeColorNoise: {fileID: 1324793986}
-  holeColorValue: {x: 0.8, y: 0}
-  holeColorAlpha: {x: 0.8, y: 0.3}
-  holeColorNoiseStrength: {x: 0.5, y: 0}
+  holeColorValue: {x: 0, y: 0}
+  holeColorAlpha: {x: 0.3, y: -0.5}
+  holeColorDropSteepness: {x: 3, y: 0}
+  holeColorNoiseStrength: {x: 0.3, y: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -1065,11 +1066,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   noiseName: Hole Color Noise
-  seed: 1337
+  seed: 2
   scale: 100
-  noiseType: 4
+  noiseType: 5
   axisScales: {x: 1, y: 1, z: 1}
-  octaves: 3
+  octaves: 5
   lacunarity: 2
   gain: 0.5
   fractalType: 0
@@ -1088,7 +1089,7 @@ MonoBehaviour:
   perturbLacunarity: 2
   perturbGain: 0.5
   generalSettingsFold: 1
-  fractalSettingsFold: 0
+  fractalSettingsFold: 1
   cellularSettingsFold: 0
   perturbSettingsFold: 0
   modified: 1
@@ -1298,12 +1299,12 @@ MonoBehaviour:
   shouldRegenerate: 1
   mask: {fileID: 0}
   seed: 1
-  craters: 100
-  poissonSampling: 1
+  craters: 200
+  poissonSampling: 0
   enableVariation: 1
   variationShapeFactor: 0
-  radius: {x: 25, y: 0.4}
-  holeDepth: {x: 2, y: 0.4}
+  radius: {x: 10, y: 0.8}
+  holeDepth: {x: 1.5, y: 0.6}
   holeSteepness: {x: 1, y: 0.1}
   rimHeight: {x: 1.5, y: 0.4}
   rimSteepness: {x: 0.003, y: -0.3}
@@ -1311,15 +1312,16 @@ MonoBehaviour:
   shapeNoiseScale: 0.9
   shapeNoiseStrength: 20
   ridgeColorNoise: {fileID: 290809239}
-  ridgeColorValue: {x: 0.8, y: 0}
-  ridgeColorAlpha: {x: 0.8, y: 0.3}
-  ridgeColorSpread: {x: 120, y: 0}
-  ridgeColorDecay: {x: 2, y: 0}
-  ridgeColorNoiseStrength: {x: 0.5, y: 0}
-  holeColorNoise: {fileID: 0}
-  holeColorValue: {x: 0.8, y: 0}
-  holeColorAlpha: {x: 0.8, y: 0.3}
-  holeColorNoiseStrength: {x: 0.5, y: 0}
+  ridgeColorValue: {x: 0.6, y: 0}
+  ridgeColorAlpha: {x: 0.34, y: 0.5}
+  ridgeColorSpread: {x: 25, y: 0.2}
+  ridgeColorDecay: {x: 1.7, y: 0}
+  ridgeColorNoiseStrength: {x: 0.7, y: 0}
+  holeColorNoise: {fileID: 1324793986}
+  holeColorValue: {x: 0, y: 0}
+  holeColorAlpha: {x: 0.4, y: 0.1}
+  holeColorDropSteepness: {x: 2, y: 0}
+  holeColorNoiseStrength: {x: 0.4, y: 0}
 --- !u!1 &1893557551
 GameObject:
   m_ObjectHideFlags: 0

@@ -33,6 +33,7 @@ public class CratersECL : ECLayer {
     public FastNoiseSIMDUnity holeColorNoise;
     public Vector2 holeColorValue = new Vector2(.8f, 0f);
     public Vector2 holeColorAlpha = new Vector2(.8f, .3f);
+    public Vector2 holeColorDropSteepness = new Vector2(1f, 0f);
     public Vector2 holeColorNoiseStrength = new Vector2(.5f, 0f);
 
     public override bool PropagateDependencies() {
@@ -73,7 +74,8 @@ public class CratersECL : ECLayer {
         shapeNoise.SetNoiseType(FastNoiseSIMD.NoiseType.Perlin);
         float[] shapeNoiseSet = shapeNoise.GetNoiseSet(0, 0, 0, t.resolution, 1, t.resolution, t.size / t.resolution / shapeNoiseScale);
 
-        float[] colorNoiseSet = ridgeColorNoise.fastNoiseSIMD.GetNoiseSet(0, 0, 0, t.resolution, 1, t.resolution, t.size / t.resolution);
+        float[] rcNoiseSet = ridgeColorNoise.fastNoiseSIMD.GetNoiseSet(0, 0, 0, t.resolution, 1, t.resolution, t.size / t.resolution);
+        float[] hcNoiseSet = holeColorNoise.fastNoiseSIMD.GetNoiseSet(0, 0, 0, t.resolution, 1, t.resolution, t.size / t.resolution);
 
         foreach (Vector2 craterPos in craterPositions) {
             float variation = 0; 
@@ -88,19 +90,26 @@ public class CratersECL : ECLayer {
             float rs = Tools.Variate(rimSteepness, variation);
             float sf = Tools.Variate(smoothFactor, variation);
 
-            float v = Tools.Variate(ridgeColorValue, variation);
-            float a = Tools.Variate(ridgeColorAlpha, variation);
-            float spr = Tools.Variate(ridgeColorSpread, variation);
-            float dc = Tools.Variate(ridgeColorDecay, variation);
-            float cnstr = Tools.Variate(ridgeColorNoiseStrength, variation);
+            float rcv = Tools.Variate(ridgeColorValue, variation);
+            float rca = Tools.Variate(ridgeColorAlpha, variation);
+            float rcspr = Tools.Variate(ridgeColorSpread, variation);
+            float rcdc = Tools.Variate(ridgeColorDecay, variation);
+            float rcnstr = Tools.Variate(ridgeColorNoiseStrength, variation);
+
+            float hcv = Tools.Variate(holeColorValue, variation);
+            float hca = Tools.Variate(holeColorAlpha, variation);
+            float hcds = Tools.Variate(holeColorDropSteepness, variation);
+            float hcnstr = Tools.Variate(holeColorNoiseStrength, variation);
 
             float elevationRadius = r + Mathf.Sqrt(rh / rs);
-            float colorRadius = r + spr;
+            float colorRadius = r + rcspr;
             float affectedRadius = Mathf.Max(elevationRadius, colorRadius);
             int minx = Math.Max(0, Mathf.FloorToInt((craterPos.x - affectedRadius) / t.size * t.resolution));
             int miny = Math.Max(0, Mathf.FloorToInt((craterPos.y - affectedRadius) / t.size * t.resolution));
             int maxx = Math.Min(t.resolution, Mathf.CeilToInt((craterPos.x + affectedRadius) / t.size * t.resolution));
             int maxy = Math.Min(t.resolution, Mathf.CeilToInt((craterPos.y + affectedRadius) / t.size * t.resolution));
+
+            MouseIndicator mi = gameObject.GetComponentInParent<BaseTerrain>().GetComponentInChildren<MouseIndicator>();
 
             for (int x = minx; x < maxx; x++) {
                 for (int y = miny; y < maxy; y++) {
@@ -116,11 +125,16 @@ public class CratersECL : ECLayer {
                     elevationValues[x, y] += craterShape;
 
                     float distToRidge = Mathf.Abs(dist - r);
-                    Color pixelColor = new Color(v, v, v, a);
-                    pixelColor.a += colorNoiseSet[x + t.resolution * y] * cnstr;
-                    pixelColor.a *= Mathf.Pow(Mathf.Max(0, 1 - distToRidge / spr), dc);
+                    Color ridgeColor = new Color(rcv, rcv, rcv, rca);
+                    ridgeColor.a += rcNoiseSet[x + t.resolution * y] * rcnstr;
+                    ridgeColor.a *= Mathf.Pow(Mathf.Max(0, 1 - distToRidge / rcspr), rcdc);
 
-                    colorValues[x, y] = Tools.OverlayColors(colorValues[x, y], pixelColor);
+                    Color holeColor = new Color(hcv, hcv, hcv, hca);
+                    holeColor.a += hcNoiseSet[x + t.resolution * y] * hcnstr;
+                    holeColor.a *= Mathf.Max(0, Tools.SmoothMin(hcds * (1 - dist / r), 1, .5f));
+
+                    colorValues[x, y] = Tools.OverlayColors(colorValues[x, y], holeColor);
+                    colorValues[x, y] = Tools.OverlayColors(colorValues[x, y], ridgeColor);
 
                 }
             }
