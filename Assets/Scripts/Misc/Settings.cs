@@ -5,6 +5,6 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Settings : MonoBehaviour {
     void Awake() {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 20;
     }
 }

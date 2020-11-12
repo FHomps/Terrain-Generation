@@ -787,7 +787,7 @@ MonoBehaviour:
   shouldRegenerate: 1
   mask: {fileID: 0}
   noise: {fileID: 968388858}
-  strength: 2.5
+  strength: 3
 --- !u!114 &968388858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -805,9 +805,9 @@ MonoBehaviour:
   scale: 200
   noiseType: 5
   axisScales: {x: 1, y: 1, z: 1}
-  octaves: 7
+  octaves: 4
   lacunarity: 3
-  gain: 0.6
+  gain: 0.5
   fractalType: 0
   cellularDistanceFunction: 0
   cellularReturnType: 1
@@ -877,7 +877,7 @@ MonoBehaviour:
   shouldRegenerate: 1
   mask: {fileID: 0}
   noise: {fileID: 1042170898}
-  strength: 40
+  strength: 35
 --- !u!114 &1042170898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -892,10 +892,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   noiseName: Surface El Noise
   seed: 1337
-  scale: 1000
+  scale: 1500
   noiseType: 5
   axisScales: {x: 1, y: 1, z: 1}
-  octaves: 3
+  octaves: 5
   lacunarity: 2
   gain: 0.3
   fractalType: 0
@@ -950,7 +950,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unlitShader: {fileID: 4800000, guid: 9cc3ff434e6ba074d83d7a01ce89de21, type: 3}
   litShader: {fileID: 4800000, guid: 0bf81443d8862d24a8760056648e4a19, type: 3}
-  resolution: 1024
+  resolution: 2048
   size: 1600
   groundTruthMode: 0
   WIPVertices: []
